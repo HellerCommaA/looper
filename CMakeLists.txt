@@ -49,12 +49,17 @@ else()
     target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wno-c++11-narrowing -Wno-unused-parameter)
 endif()
 
-find_package(raylib CONFIG REQUIRED)
+find_package(libtcod CONFIG REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE libtcod::libtcod)
 
-target_link_libraries(
-    ${PROJECT_NAME}
+find_package(fmt CONFIG REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
+
+find_package(SDL2 CONFIG REQUIRED)
+target_link_libraries(${PROJECT_NAME}
     PRIVATE
-        raylib
+    $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
+    $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
 )
 
 target_link_options(${PROJECT_NAME} PRIVATE -fsanitize=address,undefined)

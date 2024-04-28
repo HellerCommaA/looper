@@ -3,6 +3,17 @@
     "name": "raylib-template",
     "version-semver": "0.0.0",
     "dependencies": [
-        "raylib"
+        {
+            "name": "libtcod",
+            "default-features": true,
+            "features": [
+                "png",
+                "sdl",
+                "unicode",
+                "zlib"
+            ]
+        },
+        "sdl2",
+        "fmt"
     ]
 }
